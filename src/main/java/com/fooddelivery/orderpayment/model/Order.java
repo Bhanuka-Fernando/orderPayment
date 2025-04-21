@@ -21,5 +21,6 @@ public class Order {
     private double totalPrice;
     private String status;
     private LocalDateTime createdAt;
+    private String orderImage;
 
 }
