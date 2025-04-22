@@ -7,11 +7,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Document(collection="restaurants")
-public class Restaurants {
+@NoArgsConstructor
+@Document(collection = "menuItems")
+public class MenuItem {
     @Id
-    private String restaurantId;
-    private String restaurantName;
+    private String id;
+    private String name;
+    private String description;
+    private double price;
+    private String imagePath;
+    private String restaurantId;  // Reference to Restaurant
 }

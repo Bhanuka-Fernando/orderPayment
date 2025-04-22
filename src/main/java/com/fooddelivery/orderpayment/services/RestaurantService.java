@@ -1,34 +1,53 @@
 package com.fooddelivery.orderpayment.services;
 
-
-import com.fooddelivery.orderpayment.model.Restaurants;
-import com.fooddelivery.orderpayment.repository.RestaurantRepository;
+import com.fooddelivery.orderpayment.model.Restaurant;
+import com.fooddelivery.orderpayment.repository.RestaurantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RestaurantService {
-
     @Autowired
-    private RestaurantRepository restaurantRepository;
+    private RestaurantRepo restaurantRepository;
 
-
-    // create restaurant
-    public Restaurants createRestaurant(Restaurants restaurant) {
+    public Restaurant createRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
 
-    // delete Restaurant
-    public void deleteRestaurant(String restaurantId) {
-        restaurantRepository.deleteById(restaurantId);
-    }
-
-    // Get all restaurants
-    public List<Restaurants> getAllRestaurants(){
+    public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
 
+    public Optional<Restaurant> getRestaurantById(String id) {
+        return restaurantRepository.findById(id);
+    }
+
+    public Optional<Restaurant> updateRestaurant(String id, Restaurant updatedRestaurant) {
+        return restaurantRepository.findById(id).map(existing -> {
+            existing.setName(updatedRestaurant.getName());
+            existing.setEmail(updatedRestaurant.getEmail());
+            existing.setPhone(updatedRestaurant.getPhone());
+            existing.setAddress(updatedRestaurant.getAddress());
+            existing.setOwnerName(updatedRestaurant.getOwnerName());
+            existing.setOpeningTime(updatedRestaurant.getOpeningTime());
+            existing.setClosingTime(updatedRestaurant.getClosingTime());
+
+            return restaurantRepository.save(existing);
+        });
+    }
+
+    public boolean deleteRestaurant(String id) {
+        if (restaurantRepository.existsById(id)) {
+            restaurantRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }
+
+
 
