@@ -23,7 +23,7 @@ public class StripeService {
 
         SessionCreateParams.LineItem.PriceData priceData = new SessionCreateParams.LineItem.PriceData.Builder()
                 .setCurrency(productRequest.getCurrency()==null?"USD": productRequest.getCurrency())
-                .setUnitAmount(productRequest.getAmount())
+                .setUnitAmount(productRequest.getAmount()*100)
                 .setProductData(productData)
                 .build();
 
@@ -36,7 +36,7 @@ public class StripeService {
 
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:8080/success")  // success navigate to this endpoint
+                .setSuccessUrl("http://localhost:3000/cart")  // success navigate to this endpoint
                 .setCancelUrl("http://localhost:8080/cancel")
                 .addLineItem(lineItem)
                 .build();
